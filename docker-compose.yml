@@ -1,0 +1,36 @@
+services:
+  event:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes: [".:/app"]
+    command: sh -c "pip install -q -r requirements.txt && PYTHONPATH=. uvicorn src.event.app:app --host 0.0.0.0 --port 8100"
+    ports: ["8100:8100"]
+  governance:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes: [".:/app"]
+    environment:
+      REVIEW_CAP_USD: "50"
+      FREEZE_CAP_USD: "250"
+    command: sh -c "pip install -q -r requirements.txt && PYTHONPATH=. uvicorn src.governance.app:app --host 0.0.0.0 --port 8110"
+    ports: ["8110:8110"]
+  warden:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes: [".:/app"]
+    environment:
+      WARDEN_GOV_URL: http://governance:8110
+      WARDEN_PAMF_URL: http://host.docker.internal:8080
+    command: sh -c "pip install -q -r requirements.txt && PYTHONPATH=. uvicorn src.warden.app:app --host 0.0.0.0 --port 8120"
+    ports: ["8120:8120"]
+    depends_on: [governance]
+  loop:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes: [".:/app"]
+    environment:
+      LOOP_WARDEN_URL: http://warden:8120
+      LOOP_EVENT_URL: http://event:8100
+    command: sh -c "pip install -q -r requirements.txt && PYTHONPATH=. uvicorn src.loop.app:app --host 0.0.0.0 --port 8130"
+    ports: ["8130:8130"]
+    depends_on: [warden, event]
