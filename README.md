@@ -43,3 +43,6 @@ Collect and ads are **stubs**. No live Stripe.
 
 ## Relevance to secure systems / edge / defense
 A control plane can help edge and defensive agents separate requested operations from policy-controlled execution. Existing collection and payment steps include stubs and are not production enforcement.
+
+## Trusted execution and verifiability
+The event, governance, Warden and job-loop services illustrate a policy-mediated control-plane pattern: request intake, risk thresholds, review gates, freeze requests, and traceable decisions. A requested freeze is not proof of hardware-level isolation or tamper-proof enforcement. Validate authorization, failure handling, audit integrity and kill-switch behavior before any sensitive deployment.
