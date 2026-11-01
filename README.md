@@ -39,3 +39,7 @@ $80 → review queue, no collect.
 $300 → Warden kill + PAMF freeze request.
 
 Collect and ads are **stubs**. No live Stripe.
+
+
+## Relevance to secure systems / edge / defense
+A control plane can help edge and defensive agents separate requested operations from policy-controlled execution. Existing collection and payment steps include stubs and are not production enforcement.
