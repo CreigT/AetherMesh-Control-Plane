@@ -40,6 +40,31 @@ $300 → Warden kill + PAMF freeze request.
 
 Collect and ads are **stubs**. No live Stripe.
 
+## SECURE
+
+- Caps are explicit and overridable (REVIEW $50 / FREEZE $250).
+- Over-cap actions route to review or freeze; they do not auto-execute.
+- Collect and payment steps are stubs only. No live Stripe or real fund movement.
+- Services are separate processes. No automatic credential sharing across them.
+- A requested freeze is not hardware isolation or tamper-proof enforcement.
+
+## VERIFY
+
+Verification is evidence of threshold behavior and stub boundaries, not production claims.
+
+- Confirm $45 proceeds through stubs without review.
+- Confirm $80 enters review and does not collect.
+- Confirm $300 triggers Warden kill + freeze request.
+- Confirm no live external payment execution occurs.
+
+See `docs/VERIFY_WALKTHROUGH.md` for the concrete steps.
+
+## DOCUMENT
+
+- This README is the public summary of the slice.
+- Full operational card: `docs/OPERATIONAL_CARD.md`
+- Verification walkthrough: `docs/VERIFY_WALKTHROUGH.md`
+- Documentation defines the intended thresholds and stub boundaries; code is the illustrated implementation.
 
 ## Relevance to secure systems / edge / defense
 A control plane can help edge and defensive agents separate requested operations from policy-controlled execution. Existing collection and payment steps include stubs and are not production enforcement.
